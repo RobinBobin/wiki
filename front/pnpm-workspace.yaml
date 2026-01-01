@@ -1,5 +1,10 @@
+ignoredBuiltDependencies:
+  - '@robinbobin/eslint-config'
+  - '@robinbobin/eslint-config-react'
+
 nodeLinker: hoisted
 
 onlyBuiltDependencies:
+  - '@robinbobin/eslint-config-react-native'
   - '@robinbobin/ts-config'
   - unrs-resolver
