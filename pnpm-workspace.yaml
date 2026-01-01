@@ -1,0 +1,12 @@
+packages:
+  - front
+
+ignoredBuiltDependencies:
+  - '@robinbobin/eslint-config'
+  - '@robinbobin/eslint-config-react'
+  - '@robinbobin/eslint-config-react-native'
+  - '@robinbobin/prettier-config'
+  - '@robinbobin/ts-config'
+
+onlyBuiltDependencies:
+  - unrs-resolver
