@@ -47,6 +47,7 @@
     "build-android-development": "pnpm eas build --platform android --profile development",
     "build-android-preview": "pnpm eas build --platform android --profile preview",
     "build-web": "pnpm expo export --platform web",
+    "clean": "rm -rf node_modules",
     "eas": "pnpm dlx eas-cli@latest",
     "prettify": "tsc && eslint --fix && prettier . --write",
     "start": "expo start",

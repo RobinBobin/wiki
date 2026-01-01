@@ -4,7 +4,8 @@
     "lint-staged": "^16.2.7"
   },
   "scripts": {
-    "clean": "rm -rf node_modules && pnpm -r exec rm -rf node_modules",
+    "clean": "rm -rf node_modules",
+    "clean-all": "pnpm --include-workspace-root --recursive clean",
     "prepare": "husky"
   }
 }
