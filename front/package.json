@@ -49,7 +49,8 @@
     "eas": "pnpm dlx eas-cli@latest",
     "prettify": "tsc && eslint --fix && prettier . --write",
     "start": "expo start",
-    "update-android-preview": "pnpm eas update --auto --platform android --channel preview"
+    "update-android-preview": "pnpm eas update --auto --platform android --channel preview",
+    "start-web": "expo start --web"
   },
   "type": "module",
   "version": "1.0.0"
