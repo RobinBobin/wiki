@@ -84,6 +84,9 @@ importers:
         specifier: 0.5.1
         version: 0.5.1(@babel/core@7.28.5)(react-native@0.81.5(@babel/core@7.28.5)(@types/react@19.1.17)(react@19.1.0))(react@19.1.0)
     devDependencies:
+      '@robinbobin/ts-config':
+        specifier: ^1.0.0
+        version: 1.0.0(typescript@5.9.3)
       '@types/react':
         specifier: ~19.1.0
         version: 19.1.17
@@ -1203,6 +1206,11 @@ packages:
 
   '@react-navigation/routers@7.5.3':
     resolution: {integrity: sha512-1tJHg4KKRJuQ1/EvJxatrMef3NZXEPzwUIUZ3n1yJ2t7Q97siwRtbynRpQG9/69ebbtiZ8W3ScOZF/OmhvM4Rg==}
+
+  '@robinbobin/ts-config@1.0.0':
+    resolution: {integrity: sha512-fM1GSBBWWKmlpWrSfq8gU8lXPIZr/jJXryfLw3UjMF3AGkllAiqFDPPK8szhtJLOHg73oBGP0T6I2B3FmXVOFw==}
+    peerDependencies:
+      typescript: ^5.9.3
 
   '@rtsao/scc@1.1.0':
     resolution: {integrity: sha512-zt6OdqaDoOnJ1ZYsCYGt9YmWzDXl4vQdKTyJev62gFhRGKdx7mcT54V9KIjg+d2wi9EXsPvAPKe7i7WjfVWB8g==}
@@ -5600,6 +5608,10 @@ snapshots:
   '@react-navigation/routers@7.5.3':
     dependencies:
       nanoid: 3.3.11
+
+  '@robinbobin/ts-config@1.0.0(typescript@5.9.3)':
+    dependencies:
+      typescript: 5.9.3
 
   '@rtsao/scc@1.1.0': {}
 
