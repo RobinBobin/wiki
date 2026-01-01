@@ -4,7 +4,7 @@ import { defineConfig } from 'eslint/config'
 export default defineConfig(
   parentConfig,
   {
-    ignores: ['dist/*', 'expo-env.d.ts']
+    ignores: ['babel.config.cjs', 'dist/*', 'expo-env.d.ts']
   },
   {
     rules: {

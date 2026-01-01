@@ -2,10 +2,11 @@
   "compilerOptions": {
     "paths": {
       "@commonComponents": ["./src/commonComponents"],
-      "@helpers/*": ["./src/helpers/*"]
+      "@helpers/*": ["./src/helpers/*"],
+      "@hooks": ["./src/hooks"]
     }
   },
   "extends": ["expo/tsconfig.base", "@robinbobin/ts-config"],
-  "files": ["./src/constants/appConfig.js", "eslint.config.js"],
+  "files": ["eslint.config.js", "src/constants/appConfig.js"],
   "include": ["./**/*.ts", "./**/*.tsx", ".expo/types/**/*.ts", "expo-env.d.ts"]
 }

@@ -1,2 +1,3 @@
-// eslint-disable-next-line import-x/no-unused-modules
+export { alert } from './alert'
+export * from './handleError'
 export * from './tabs'

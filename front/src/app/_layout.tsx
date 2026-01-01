@@ -1,18 +1,14 @@
 // eslint-disable-next-line import-x/no-unassigned-import
 import 'react-native-reanimated'
 
-import { DefaultTheme, ThemeProvider } from '@react-navigation/native'
-import { Stack } from 'expo-router'
-import { SystemBars } from 'react-native-edge-to-edge'
+import { useInit } from '@hooks'
+
+import { App } from '../App'
 
 const RootLayout: React.FC = () => {
-  return (
-    <ThemeProvider value={DefaultTheme}>
-      <Stack>
-        <Stack.Screen name='(tabs)' options={{ headerShown: false }} />
-      </Stack>
-      <SystemBars />
-    </ThemeProvider>
-  )
+  const isInitialized = useInit()
+
+  return isInitialized ? <App /> : undefined
 }
+
 export default RootLayout
