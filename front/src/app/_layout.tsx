@@ -3,6 +3,7 @@ import 'react-native-reanimated'
 
 import { DefaultTheme, ThemeProvider } from '@react-navigation/native'
 import { Stack } from 'expo-router'
+import { SystemBars } from 'react-native-edge-to-edge'
 
 const RootLayout: React.FC = () => {
   return (
@@ -10,6 +11,7 @@ const RootLayout: React.FC = () => {
       <Stack>
         <Stack.Screen name='(tabs)' options={{ headerShown: false }} />
       </Stack>
+      <SystemBars />
     </ThemeProvider>
   )
 }
