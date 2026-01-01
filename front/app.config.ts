@@ -44,6 +44,7 @@ const config: ExpoConfig = {
   platforms: ['android', 'ios', 'web'],
   plugins: [
     'expo-dev-client',
+    'expo-font',
     'expo-router',
     [
       'expo-splash-screen',
