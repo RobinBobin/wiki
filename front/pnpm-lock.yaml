@@ -87,6 +87,9 @@ importers:
       '@robinbobin/eslint-config-react-native':
         specifier: ^1.0.1
         version: 1.0.1(@typescript-eslint/utils@8.51.0(eslint@9.39.2)(typescript@5.9.3))(eslint-import-resolver-node@0.3.9)(eslint-plugin-import@2.32.0(@typescript-eslint/parser@8.51.0(eslint@9.39.2)(typescript@5.9.3))(eslint@9.39.2))(eslint@9.39.2)(typescript@5.9.3)
+      '@robinbobin/prettier-config':
+        specifier: ^0.0.5
+        version: 0.0.5(prettier@3.7.4)
       '@robinbobin/ts-config':
         specifier: ^1.0.0
         version: 1.0.0(typescript@5.9.3)
@@ -96,6 +99,9 @@ importers:
       eslint:
         specifier: ^9.25.0
         version: 9.39.2
+      prettier:
+        specifier: ^3.7.4
+        version: 3.7.4
       typescript:
         specifier: ~5.9.2
         version: 5.9.3
@@ -1213,6 +1219,11 @@ packages:
     resolution: {integrity: sha512-O6jz2N9eWTJtXyBJYjYVfh34B9DoJv2GIO9naTgC0gun472X1dMUuYx6/BMBNgDDSV5inuExGJVI2UoegBXW9Q==}
     peerDependencies:
       eslint: ^9.39.1
+
+  '@robinbobin/prettier-config@0.0.5':
+    resolution: {integrity: sha512-Nn7uKHKwQBnDhMV4BqQU85UqA7jhqPk4P0Hpj6UsvKJ3vIfxDnh+cCue9pVcMezC9kg/ZtS3Ccqwjm2qi7lwkw==}
+    peerDependencies:
+      prettier: ^3.6.2
 
   '@robinbobin/ts-config@1.0.0':
     resolution: {integrity: sha512-fM1GSBBWWKmlpWrSfq8gU8lXPIZr/jJXryfLw3UjMF3AGkllAiqFDPPK8szhtJLOHg73oBGP0T6I2B3FmXVOFw==}
@@ -3278,6 +3289,11 @@ packages:
   prelude-ls@1.2.1:
     resolution: {integrity: sha512-vkcDPrRZo1QZLbn5RLGPpg/WmIQ65qoWWhcGKf/b5eplkkarX0m9z8ppCat4mlOqUsWpyNuYgO3VRyrYHSzX5g==}
     engines: {node: '>= 0.8.0'}
+
+  prettier@3.7.4:
+    resolution: {integrity: sha512-v6UNi1+3hSlVvv8fSaoUbggEM5VErKmmpGA7Pl3HF8V6uKY7rvClBOJlH6yNwQtfTueNkGVpOv/mtWL9L4bgRA==}
+    engines: {node: '>=14'}
+    hasBin: true
 
   pretty-bytes@5.6.0:
     resolution: {integrity: sha512-FFw039TmrBqFK8ma/7OL3sDz/VytdtJr044/QUJtH0wK9lb9jLq9tJyIxUwtQJHwar2BqtiA4iCWSwo9JLkzFg==}
@@ -5662,6 +5678,10 @@ snapshots:
       - eslint-plugin-import
       - supports-color
       - typescript
+
+  '@robinbobin/prettier-config@0.0.5(prettier@3.7.4)':
+    dependencies:
+      prettier: 3.7.4
 
   '@robinbobin/ts-config@1.0.0(typescript@5.9.3)':
     dependencies:
@@ -8079,6 +8099,8 @@ snapshots:
       source-map-js: 1.2.1
 
   prelude-ls@1.2.1: {}
+
+  prettier@3.7.4: {}
 
   pretty-bytes@5.6.0: {}
 

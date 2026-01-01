@@ -28,9 +28,11 @@
   },
   "devDependencies": {
     "@robinbobin/eslint-config-react-native": "^1.0.1",
+    "@robinbobin/prettier-config": "^0.0.5",
     "@robinbobin/ts-config": "^1.0.0",
     "@types/react": "~19.1.0",
     "eslint": "^9.25.0",
+    "prettier": "^3.7.4",
     "typescript": "~5.9.2"
   },
   "main": "expo-router/entry",

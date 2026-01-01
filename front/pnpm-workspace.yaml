@@ -6,5 +6,6 @@ nodeLinker: hoisted
 
 onlyBuiltDependencies:
   - '@robinbobin/eslint-config-react-native'
+  - '@robinbobin/prettier-config'
   - '@robinbobin/ts-config'
   - unrs-resolver
