@@ -28,6 +28,11 @@ const config: ExpoConfig = {
     reactCompiler: true,
     typedRoutes: true
   },
+  extra: {
+    eas: {
+      projectId: '9de5a237-19a8-46f6-aaf2-cada941ab27e'
+    }
+  },
   githubUrl: 'https://github.com/RobinBobin/wiki',
   icon: './assets/images/icon.png',
   ios: {
@@ -38,6 +43,7 @@ const config: ExpoConfig = {
   newArchEnabled: true,
   platforms: ['android', 'ios', 'web'],
   plugins: [
+    'expo-dev-client',
     'expo-router',
     [
       'expo-splash-screen',
