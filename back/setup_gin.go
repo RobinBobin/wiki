@@ -34,7 +34,7 @@ func addExtensionToDist(ctx *gin.Context) {
 	ctx.Next()
 }
 
-//go:embed dist/*
+//go:embed all:dist/*
 var embeddedDist embed.FS
 
 func setupGin(server *http.Server) {
