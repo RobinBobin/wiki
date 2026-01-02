@@ -1,7 +1,3 @@
 {
-  "**/*.{js,json,ts,tsx}": [
-    "bash -c 'tsc --noEmit'",
-    "eslint --fix",
-    "prettier --write"
-  ]
+  "**/*.{js,json,ts,tsx}": ["sh -c 'tsc'", "eslint --fix", "prettier --write"]
 }
