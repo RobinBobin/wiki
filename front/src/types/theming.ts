@@ -13,9 +13,4 @@ type TAppTheme = ReadonlyDeep<
   }
 >
 
-interface IUseThemesReturnType {
-  navigationTheme: ReactNavigation.Theme
-  paperTheme: TAppTheme
-}
-
-export type { IAppThemeColors, IUseThemesReturnType, TAppTheme }
+export type { IAppThemeColors, TAppTheme }

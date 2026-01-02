@@ -10,14 +10,14 @@ const TabLayout: React.FC = () => {
       }}
     >
       <Tabs.Screen
-        name='index'
+        name='home'
         options={{
-          tabBarIcon: getTabBarIcon('search'),
-          title: 'Search'
+          tabBarIcon: getTabBarIcon('home'),
+          title: 'Home'
         }}
       />
       <Tabs.Screen
-        name='explore'
+        name='article'
         options={{
           tabBarIcon: getTabBarIcon('edit'),
           title: 'Create'

@@ -8,6 +8,12 @@ export default defineConfig(
   },
   {
     rules: {
+      '@typescript-eslint/no-shadow': [
+        'error',
+        {
+          allow: ['Screen']
+        }
+      ],
       '@typescript-eslint/prefer-readonly-parameter-types': [
         'error',
         {

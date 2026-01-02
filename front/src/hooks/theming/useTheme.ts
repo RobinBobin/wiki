@@ -1,4 +1,4 @@
-import type { TAppTheme } from './useThemes'
+import type { TAppTheme } from '@types'
 
 import { useTheme as useThemeRNP } from 'react-native-paper'
 

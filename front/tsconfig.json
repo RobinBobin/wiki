@@ -2,8 +2,11 @@
   "compilerOptions": {
     "paths": {
       "@commonComponents": ["./src/commonComponents"],
+      "@enums": ["./src/enums"],
       "@helpers/*": ["./src/helpers/*"],
-      "@hooks": ["./src/hooks"]
+      "@hooks": ["./src/hooks"],
+      "@routes": ["./src/routes"],
+      "@types": ["./src/types"]
     }
   },
   "extends": ["expo/tsconfig.base", "@robinbobin/ts-config"],

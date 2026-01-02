@@ -1,4 +1,5 @@
-import type { IUseThemesReturnType, TAppTheme } from './types'
+import type { TAppTheme } from '@types'
+import type { IUseThemesReturnType } from './types'
 
 import {
   DarkTheme as RNavDarkTheme,
@@ -14,13 +15,16 @@ import {
 import md3DarkJson from './md3Dark.json'
 import md3LightJson from './md3Light.json'
 
+const roundness = 2
+
 export const useThemes = (): IUseThemesReturnType => {
   const md3DarkTheme: TAppTheme = {
     ...MD3DarkTheme,
     colors: {
       ...MD3DarkTheme.colors,
       ...md3DarkJson.colors
-    }
+    },
+    roundness
   }
 
   const md3LightTheme: TAppTheme = {
@@ -28,7 +32,8 @@ export const useThemes = (): IUseThemesReturnType => {
     colors: {
       ...MD3LightTheme.colors,
       ...md3LightJson.colors
-    }
+    },
+    roundness
   }
 
   const { DarkTheme, LightTheme } = adaptNavigationTheme({
