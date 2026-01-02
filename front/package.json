@@ -51,8 +51,7 @@
     "eas": "./scripts/eas",
     "prettify": "./scripts/prettify",
     "start": "./scripts/start",
-    "update-android-preview": "./scripts/updateAndroidPreview",
-    "start-web": "./scripts/startWeb"
+    "update-android-preview": "./scripts/updateAndroidPreview"
   },
   "type": "module",
   "version": "1.0.0"
