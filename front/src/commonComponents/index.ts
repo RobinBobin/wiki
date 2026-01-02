@@ -1,3 +1,5 @@
+export { HorizontalGap } from './HorizontalGap'
 export { Screen } from './Screen'
 export * from './VectorIcon'
+export { VerticalGap } from './VerticalGap'
 export { View } from './View'

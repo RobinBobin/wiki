@@ -1,0 +1,1 @@
+export { uiModel } from './UIModel'
