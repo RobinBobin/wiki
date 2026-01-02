@@ -5,6 +5,7 @@ go 1.25.5
 require (
 	github.com/gin-contrib/static v1.1.5
 	github.com/gin-gonic/gin v1.11.0
+	github.com/gorilla/websocket v1.5.3
 )
 
 require (

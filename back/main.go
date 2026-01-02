@@ -2,12 +2,13 @@ package main
 
 import (
 	"net/http"
+	"wiki/gin"
 )
 
 func main() {
 	server := &http.Server{}
 
-	go setupGin(server)
+	go gin.SetupGin(server)
 
 	handleShutdown(server)
 }

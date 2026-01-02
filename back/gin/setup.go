@@ -1,4 +1,4 @@
-package main
+package gin
 
 import (
 	"embed"
@@ -43,7 +43,7 @@ func must(err error) {
 //go:embed all:dist/*
 var embeddedDist embed.FS
 
-func setupGin(server *http.Server) {
+func SetupGin(server *http.Server) {
 	dist, err := static.EmbedFolder(embeddedDist, "dist")
 
 	must(err)
@@ -52,6 +52,7 @@ func setupGin(server *http.Server) {
 
 	must(router.SetTrustedProxies(nil))
 
+	router.GET("/ws", WSHandler)
 	router.Use(static.Serve("/", dist))
 	router.Use(addExtensionToDist)
 
