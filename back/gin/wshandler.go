@@ -2,12 +2,17 @@ package gin
 
 import (
 	"log"
+	"net/http"
 
 	"github.com/gin-gonic/gin"
 	"github.com/gorilla/websocket"
 )
 
-var upgrader = websocket.Upgrader{}
+var upgrader = websocket.Upgrader{
+	CheckOrigin: func(_ *http.Request) bool {
+		return true
+	},
+}
 
 func handleWebSocket(connection *websocket.Conn) {
 	cleanup := func() {
