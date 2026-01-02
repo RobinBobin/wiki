@@ -1,3 +1,3 @@
 pnpm expo export --platform web &&
-rm -rf ../back/dist &&
-cp -r dist ../back/dist
+rm -rf ../back/gin/dist &&
+cp -r dist ../back/gin/dist
