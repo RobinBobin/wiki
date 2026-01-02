@@ -1,0 +1,1 @@
+pnpm eas update --auto --platform android --channel preview

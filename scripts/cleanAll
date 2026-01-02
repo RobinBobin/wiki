@@ -1,0 +1,1 @@
+pnpm --include-workspace-root --recursive clean

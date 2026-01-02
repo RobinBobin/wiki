@@ -44,15 +44,15 @@
   "packageManager": "pnpm@10.27.0+sha512.72d699da16b1179c14ba9e64dc71c9a40988cbdc65c264cb0e489db7de917f20dcf4d64d8723625f2969ba52d4b7e2a1170682d9ac2a5dcaeaab732b7e16f04a",
   "private": true,
   "scripts": {
-    "build-android-development": "pnpm eas build --platform android --profile development",
-    "build-android-preview": "pnpm eas build --platform android --profile preview",
-    "build-web": "pnpm expo export --platform web && rm -rf ../back/dist && cp -r dist ../back/dist",
-    "clean": "rm -rf node_modules",
-    "eas": "pnpm dlx eas-cli@latest",
-    "prettify": "tsc && eslint --fix && prettier . --write",
-    "start": "expo start",
-    "update-android-preview": "pnpm eas update --auto --platform android --channel preview",
-    "start-web": "expo start --web"
+    "build-android-development": "./scripts/buildAndroidDevelopment",
+    "build-android-preview": "./scripts/buildAndroidPreview",
+    "build-web": "./scripts/buildWeb",
+    "clean": "./scripts/clean",
+    "eas": "./scripts/eas",
+    "prettify": "./scripts/prettify",
+    "start": "./scripts/start",
+    "update-android-preview": "./scripts/updateAndroidPreview",
+    "start-web": "./scripts/startWeb"
   },
   "type": "module",
   "version": "1.0.0"
