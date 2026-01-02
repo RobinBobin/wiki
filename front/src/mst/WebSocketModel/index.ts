@@ -1,24 +1,25 @@
+import type { TWebSocketState } from '@types'
 import type { IWebSocketModelVolatile } from './types'
 
 import { types } from 'mobx-state-tree'
 
-export const WebSocketModel = types
+const WebSocketModel = types
   .model('WebSocketModel')
   .volatile<IWebSocketModelVolatile>(() => ({
     address: '',
-    shouldReconnect: true
+    shouldReconnect: true,
+    state: 'closed'
   }))
-  .views(self => ({
-    get isConnecting(): boolean {
-      return self.ws?.readyState === WebSocket.CONNECTING
-    },
-    get isOpen(): boolean {
-      return self.ws?.readyState === WebSocket.OPEN
+  .actions(self => ({
+    _setState(state: TWebSocketState): void {
+      self.state = state
     }
   }))
   .actions(self => ({
     _open(): void {
-      self.ws = new WebSocket(`ws://${self.address}`)
+      self._setState('connecting')
+
+      self.ws = new WebSocket(`ws://${self.address}/ws`)
 
       self.ws.onclose = ({ wasClean }): void => {
         if (wasClean) {
@@ -30,22 +31,36 @@ export const WebSocketModel = types
         setTimeout(() => {
           if (self.shouldReconnect) {
             this._open()
+          } else {
+            self._setState('closed')
           }
         }, reconnectionDelay)
+      }
+
+      self.ws.onmessage = (event): void => {
+        console.log(event.type, event.data)
+      }
+
+      self.ws.onopen = (): void => {
+        self._setState('open')
       }
     }
   }))
   .actions(self => ({
-    close(): void {
+    close(this: void): void {
       self.ws?.close()
 
       self.shouldReconnect = false
       self.ws = undefined
+
+      self._setState('closed')
     },
-    open(address: string): void {
+    open(this: void, address: string): void {
       self.address = address
       self.shouldReconnect = true
 
       self._open()
     }
   }))
+
+export const webSocket = WebSocketModel.create()

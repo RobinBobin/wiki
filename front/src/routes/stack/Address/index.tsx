@@ -1,7 +1,10 @@
+import type { TWebSocketState } from '@types'
+
 import { Screen, VerticalGap, View } from '@commonComponents'
-import { uiModel } from '@mst'
+import { webSocket } from '@mst'
+import { router } from 'expo-router'
 import { observer } from 'mobx-react-lite'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { Button, TextInput } from 'react-native-paper'
 
 import styles from './styles'
@@ -9,14 +12,35 @@ import styles from './styles'
 export const Address: React.FC = observer(() => {
   const [address, setAddress] = useState('192.168.1.80:8080')
 
-  const { ws } = uiModel
+  const { close, open, state } = webSocket
 
   const connect = (): void => {
-    if (ws.isConnecting) {
-      ws.close()
-    } else {
-      ws.open(address)
+    switch (state) {
+      case 'closed':
+        open(address)
+        break
+
+      case 'connecting':
+      case 'open':
+        close()
+        break
     }
+  }
+
+  useEffect(() => {
+    return close
+  }, [close])
+
+  useEffect(() => {
+    if (state === 'open') {
+      router.navigate('/home')
+    }
+  }, [state])
+
+  const titles: Record<TWebSocketState, string> = {
+    closed: 'Connect',
+    connecting: 'Connecting...',
+    open: 'Disconnect'
   }
 
   return (
@@ -28,8 +52,8 @@ export const Address: React.FC = observer(() => {
           value={address}
         />
         <VerticalGap height={15} />
-        <Button mode='contained' onPress={connect}>
-          {ws.isConnecting ? 'Connecting...' : 'Connect'}
+        <Button labelStyle={{ flex: 1 }} mode='contained' onPress={connect}>
+          {titles[state]}
         </Button>
       </View>
     </Screen>

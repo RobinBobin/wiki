@@ -1,1 +1,1 @@
-export { uiModel } from './UIModel'
+export { webSocket } from './WebSocketModel'

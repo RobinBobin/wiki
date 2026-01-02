@@ -1,4 +1,5 @@
 export { HorizontalGap } from './HorizontalGap'
+export { Pressable } from './Pressable'
 export { Screen } from './Screen'
 export * from './VectorIcon'
 export { VerticalGap } from './VerticalGap'

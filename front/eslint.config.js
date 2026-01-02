@@ -4,10 +4,16 @@ import { defineConfig } from 'eslint/config'
 export default defineConfig(
   parentConfig,
   {
-    ignores: ['babel.config.cjs', 'dist/*', 'expo-env.d.ts']
+    ignores: ['.expo', 'babel.config.cjs', 'dist/*', 'expo-env.d.ts']
   },
   {
     rules: {
+      '@typescript-eslint/no-invalid-void-type': [
+        'error',
+        {
+          allowAsThisParameter: true
+        }
+      ],
       '@typescript-eslint/no-shadow': [
         'error',
         {
