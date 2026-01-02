@@ -34,19 +34,23 @@ func addExtensionToDist(ctx *gin.Context) {
 	ctx.Next()
 }
 
+func must(err error) {
+	if err != nil {
+		log.Fatalln(err)
+	}
+}
+
 //go:embed all:dist/*
 var embeddedDist embed.FS
 
 func setupGin(server *http.Server) {
 	dist, err := static.EmbedFolder(embeddedDist, "dist")
 
-	if err != nil {
-		log.Fatalln(err)
-	}
+	must(err)
 
 	router := gin.Default()
 
-	router.SetTrustedProxies(nil)
+	must(router.SetTrustedProxies(nil))
 
 	router.Use(static.Serve("/", dist))
 	router.Use(addExtensionToDist)
