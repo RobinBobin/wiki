@@ -9,6 +9,9 @@ export const Home: React.FC = observer(() => {
 
   const onPress = (): void => {
     ws?.send('!!! Hooray !!!')
+
+    // eslint-disable-next-line @typescript-eslint/no-magic-numbers
+    ws?.send(new Uint8Array([10, 20, 30]))
   }
 
   useEffect(() => {

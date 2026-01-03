@@ -1,6 +1,7 @@
 package gin
 
 import (
+	"fmt"
 	"log"
 	"net/http"
 
@@ -33,7 +34,15 @@ func handleWebSocket(connection *websocket.Conn) {
 			break
 		}
 
-		log.Println("Received:", string(packet))
+		var verb string
+
+		if messageType == websocket.BinaryMessage {
+			verb = "%v"
+		} else {
+			verb = "%s"
+		}
+
+		log.Print("Received: ", fmt.Sprintf(verb, packet))
 
 		if err := connection.WriteMessage(messageType, packet); err != nil {
 			log.Println("Write error:", err)

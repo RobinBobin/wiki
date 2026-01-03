@@ -2,6 +2,7 @@ import type { TWebSocketState } from '@types'
 import type { IWebSocketModelVolatile } from './types'
 
 import { types } from 'mobx-state-tree'
+import { isString } from 'radashi'
 
 const WebSocketModel = types
   .model('WebSocketModel')
@@ -21,6 +22,8 @@ const WebSocketModel = types
 
       self.ws = new WebSocket(`ws://${self.address}/ws`)
 
+      self.ws.binaryType = 'arraybuffer'
+
       self.ws.onclose = ({ wasClean }): void => {
         if (wasClean) {
           return
@@ -38,7 +41,12 @@ const WebSocketModel = types
       }
 
       self.ws.onmessage = (event): void => {
-        console.log(event.type, event.data)
+        const data =
+          isString(event.data) ?
+            event.data
+          : Array.from(new Uint8Array(event.data))
+
+        console.log(event.type, data)
       }
 
       self.ws.onopen = (): void => {
