@@ -1,3 +1,7 @@
 {
-  "**/*.go": "sh -c 'golangci-lint run'"
+  "**/*.go": [
+    "sh -c 'go mod tidy'",
+    "git add ./back/go.mod ./back/go.sum",
+    "sh -c 'golangci-lint run'"
+  ]
 }
