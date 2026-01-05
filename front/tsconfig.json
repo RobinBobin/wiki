@@ -3,6 +3,7 @@
     "paths": {
       "@commonComponents": ["./src/commonComponents"],
       "@enums": ["./src/enums"],
+      "@gen/*": ["./src/gen/*"],
       "@helpers/*": ["./src/helpers/*"],
       "@hooks": ["./src/hooks"],
       "@mst": ["./src/mst"],

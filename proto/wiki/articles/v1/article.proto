@@ -1,0 +1,9 @@
+edition = "2023";
+
+package wiki.articles.v1;
+
+message Article {
+  string body = 1;
+  sint32 id = 2;
+  string title = 3;
+}

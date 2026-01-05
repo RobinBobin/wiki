@@ -5,6 +5,7 @@
     }
   ],
   "settings": {
-    "prettier.singleQuote": true
+    "prettier.singleQuote": true,
+    "protobuf.includes": ["proto"]
   }
 }

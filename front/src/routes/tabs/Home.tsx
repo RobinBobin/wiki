@@ -1,4 +1,7 @@
+import { create, toBinary } from '@bufbuild/protobuf'
 import { Pressable } from '@commonComponents'
+import { SearchArticlesResponseSchema } from '@gen/wiki/articles/v1/search_articles_response_pb'
+import { EnvelopeSchema } from '@gen/wiki/envelope/v1/envelope_pb'
 import { webSocket } from '@mst'
 import { router } from 'expo-router'
 import { observer } from 'mobx-react-lite'
@@ -8,10 +11,16 @@ export const Home: React.FC = observer(() => {
   const { state, ws } = webSocket
 
   const onPress = (): void => {
-    ws?.send('!!! Hooray !!!')
+    const payload = create(SearchArticlesResponseSchema, {})
 
-    // eslint-disable-next-line @typescript-eslint/no-magic-numbers
-    ws?.send(new Uint8Array([10, 20, 30]))
+    const envelope = create(EnvelopeSchema, {
+      payload: {
+        case: 'searchArticlesResponse',
+        value: payload
+      }
+    })
+
+    ws?.send(toBinary(EnvelopeSchema, envelope))
   }
 
   useEffect(() => {

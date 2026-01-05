@@ -1,0 +1,20 @@
+version: v2
+clean: true
+
+managed:
+  enabled: true
+  override:
+    - file_option: go_package_prefix
+      value: wiki/gen
+
+plugins:
+  - remote: buf.build/bufbuild/es
+    out: ./front/src/gen/
+    opt:
+      - json_types=true
+      - target=ts
+
+  - remote: buf.build/protocolbuffers/go
+    out: ./back/gen
+    opt:
+      - paths=source_relative

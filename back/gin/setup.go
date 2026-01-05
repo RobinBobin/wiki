@@ -9,6 +9,8 @@ import (
 	"path/filepath"
 	"strings"
 
+	"wiki/gin/ws"
+
 	"github.com/gin-contrib/static"
 	"github.com/gin-gonic/gin"
 )
@@ -52,7 +54,7 @@ func SetupGin(server *http.Server) {
 
 	must(router.SetTrustedProxies(nil))
 
-	router.GET("/ws", WSHandler)
+	router.GET("/ws", ws.GetWS)
 	router.Use(static.Serve("/", dist))
 	router.Use(addExtensionToDist)
 
