@@ -3,6 +3,7 @@ package main
 import (
 	"os/signal"
 	"syscall"
+	"wiki/db"
 	"wiki/gin"
 	"wiki/utils"
 )
@@ -19,6 +20,8 @@ func handleExit() {
 
 func main() {
 	defer utils.HandlePanic()
+
+	db.Setup()
 
 	go gin.Setup()
 
