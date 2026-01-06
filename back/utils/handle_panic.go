@@ -1,6 +1,8 @@
 package utils
 
-import "wiki/globals"
+import "os"
+
+var Quit chan os.Signal = make(chan os.Signal, 1)
 
 func HandlePanic() {
 	reason := recover()
@@ -11,5 +13,5 @@ func HandlePanic() {
 
 	ExitGracefully(reason)
 
-	close(globals.Quit)
+	close(Quit)
 }

@@ -4,14 +4,13 @@ import (
 	"os/signal"
 	"syscall"
 	"wiki/gin"
-	"wiki/globals"
 	"wiki/utils"
 )
 
 func handleExit() {
-	signal.Notify(globals.Quit, syscall.SIGINT, syscall.SIGTERM)
+	signal.Notify(utils.Quit, syscall.SIGINT, syscall.SIGTERM)
 
-	reason := <-globals.Quit
+	reason := <-utils.Quit
 
 	if reason != nil {
 		utils.ExitGracefully(reason)
