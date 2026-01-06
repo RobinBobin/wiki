@@ -10,6 +10,8 @@ import (
 	"strings"
 
 	"wiki/gin/ws"
+	"wiki/globals"
+	"wiki/utils"
 
 	"github.com/gin-contrib/static"
 	"github.com/gin-gonic/gin"
@@ -36,36 +38,28 @@ func addExtensionToDist(ctx *gin.Context) {
 	ctx.Next()
 }
 
-func must(err error) {
-	if err != nil {
-		log.Fatalln(err)
-	}
-}
-
 //go:embed all:dist/*
 var embeddedDist embed.FS
 
-func SetupGin(server *http.Server) {
+func Setup() {
+	defer utils.HandlePanic()
+
 	dist, err := static.EmbedFolder(embeddedDist, "dist")
 
-	must(err)
+	utils.Must(err)
 
 	router := gin.Default()
 
-	must(router.SetTrustedProxies(nil))
+	utils.Must(router.SetTrustedProxies(nil))
 
 	router.GET("/ws", ws.GetWS)
 	router.Use(static.Serve("/", dist))
 	router.Use(addExtensionToDist)
 
-	server.Addr = ":8080"
-	server.Handler = router
+	globals.HTTPServer.Addr = ":8080"
+	globals.HTTPServer.Handler = router
 
-	err = server.ListenAndServe()
+	err = globals.HTTPServer.ListenAndServe()
 
-	if err == http.ErrServerClosed {
-		log.Println(err)
-	} else if err != nil {
-		log.Fatalln(err)
-	}
+	log.Println(err)
 }

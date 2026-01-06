@@ -1,14 +1,27 @@
 package main
 
 import (
-	"net/http"
+	"os/signal"
+	"syscall"
 	"wiki/gin"
+	"wiki/globals"
+	"wiki/utils"
 )
 
+func handleExit() {
+	signal.Notify(globals.Quit, syscall.SIGINT, syscall.SIGTERM)
+
+	reason := <-globals.Quit
+
+	if reason != nil {
+		utils.ExitGracefully(reason)
+	}
+}
+
 func main() {
-	server := &http.Server{}
+	defer utils.HandlePanic()
 
-	go gin.SetupGin(server)
+	go gin.Setup()
 
-	handleShutdown(server)
+	handleExit()
 }
