@@ -1,20 +1,11 @@
 package db
 
-import (
-	"gorm.io/gorm"
-)
+import "gorm.io/gorm"
 
-type Article struct {
+type article struct {
 	gorm.Model
 
 	Body  string
+	ID    uint32 `gorm:"primarykey"`
 	Title string
-}
-
-func CreateArticle(body, title string) (uint, error) {
-	article := Article{Body: body, Title: title}
-
-	result := db.Create(&article)
-
-	return article.ID, result.Error
 }

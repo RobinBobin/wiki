@@ -29,23 +29,35 @@ func handleWebSocket(connection *websocket.Conn) {
 	defer cleanup()
 
 	for {
-		_, packet, err := connection.ReadMessage()
+		_, clientPacket, err := connection.ReadMessage()
 
 		if err != nil {
 			handleError(err, "Read")
 			break
 		}
 
-		envelope := &envelopev1.Envelope{}
+		clientEnvelope := &envelopev1.ClientEnvelope{}
 
-		err = proto.Unmarshal(packet, envelope)
+		err = proto.Unmarshal(clientPacket, clientEnvelope)
 
 		if err != nil {
 			handleError(err, "Unmarshal")
 			break
 		}
 
-		processEnvelope(envelope)
+		serverEnvelope := route(clientEnvelope)
+
+		if serverEnvelope != nil {
+			serverPacket, err := proto.Marshal(serverEnvelope)
+
+			if err != nil {
+				handleError(err, "Marshal")
+			}
+
+			err = connection.WriteMessage(websocket.BinaryMessage, serverPacket)
+
+			handleError(err, "Write")
+		}
 	}
 }
 

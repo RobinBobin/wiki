@@ -13,5 +13,5 @@ func Setup() {
 
 	open()
 
-	utils.Must(db.AutoMigrate(&Article{}))
+	utils.Must(db.AutoMigrate(&article{}))
 }

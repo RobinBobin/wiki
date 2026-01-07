@@ -1,0 +1,13 @@
+edition = "2023";
+
+package wiki.envelope.v1;
+
+import "wiki/articles/v1/create_article_request.proto";
+import "wiki/articles/v1/search_articles_request.proto";
+
+message ClientEnvelope {
+  oneof payload {
+    wiki.articles.v1.SearchArticlesRequest search_articles = 1;
+    wiki.articles.v1.CreateArticleRequest create_article = 2;
+  }
+}

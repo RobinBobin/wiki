@@ -9,12 +9,12 @@ managed:
 
 plugins:
   - remote: buf.build/bufbuild/es
-    out: ./front/src/gen/
+    out: ../front/src/gen/
     opt:
       - json_types=true
       - target=ts
 
   - remote: buf.build/protocolbuffers/go
-    out: ./back/gen
+    out: ../back/gen
     opt:
       - paths=source_relative

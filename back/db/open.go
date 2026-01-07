@@ -3,6 +3,7 @@ package db
 import (
 	"os"
 	"path/filepath"
+	"time"
 	"wiki/utils"
 
 	"github.com/glebarez/sqlite"
@@ -21,6 +22,9 @@ func open() {
 	dsn := filepath.Join(appDir, "sqlite.db")
 
 	db, err = gorm.Open(sqlite.Open(dsn), &gorm.Config{
+		NowFunc: func() time.Time {
+			return time.Now().UTC()
+		},
 		TranslateError: true,
 	})
 
