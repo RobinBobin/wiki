@@ -1,7 +1,7 @@
 import { create, toBinary } from '@bufbuild/protobuf'
 import { Pressable } from '@commonComponents'
-import { SearchArticlesResponseSchema } from '@gen/wiki/articles/v1/search_articles_response_pb'
-import { EnvelopeSchema } from '@gen/wiki/envelope/v1/envelope_pb'
+import { CreateArticleRequestSchema } from '@gen/wiki/articles/v1/create_article_request_pb'
+import { ClientEnvelopeSchema } from '@gen/wiki/envelope/v1/client_pb'
 import { webSocket } from '@mst'
 import { router } from 'expo-router'
 import { observer } from 'mobx-react-lite'
@@ -11,16 +11,16 @@ export const Home: React.FC = observer(() => {
   const { state, ws } = webSocket
 
   const onPress = (): void => {
-    const payload = create(SearchArticlesResponseSchema, {})
+    const payload = create(CreateArticleRequestSchema, {})
 
-    const envelope = create(EnvelopeSchema, {
+    const envelope = create(ClientEnvelopeSchema, {
       payload: {
-        case: 'searchArticlesResponse',
+        case: 'createArticle',
         value: payload
       }
     })
 
-    ws?.send(toBinary(EnvelopeSchema, envelope))
+    ws?.send(toBinary(ClientEnvelopeSchema, envelope))
   }
 
   useEffect(() => {
