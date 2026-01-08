@@ -1,52 +1,65 @@
 package article
 
 import (
-	"log"
 	"wiki/db"
+	dberrors "wiki/db/errors"
+	"wiki/gen/google/rpc"
 	articlesv1 "wiki/gen/wiki/articles/v1"
+	"wiki/utils"
 )
 
-func mustBeValid(body, title string) *articlesv1.CreateArticleResponse_Error_InvalidField {
-	var invalidFieldName string
+func Create(
+	request *articlesv1.CreateArticleRequest,
+) *articlesv1.CreateArticleResponse {
+	article, err := db.CreateArticle(
+		request.GetBody(),
+		request.GetTitle(),
+	)
 
-	if len(body) == 0 {
-		invalidFieldName = "body"
-	} else if len(title) == 0 {
-		invalidFieldName = "title"
+	if err == nil {
+		createdAt := article.CreatedAt.Unix()
+
+		return &articlesv1.CreateArticleResponse{
+			Request:   request,
+			CreatedAt: &createdAt,
+			Id:        &article.ID,
+			Status:    &rpc.Status{Code: int32(rpc.Code_OK)},
+		}
 	}
 
-	if len(invalidFieldName) == 0 {
-		return nil
+	invalidValueError, ok := err.(*dberrors.InvalidValueError)
+
+	if ok {
+		details, errorStatus := utils.PackToAny(
+			&rpc.ErrorInfo{
+				Reason: rpc.Code_name[int32(rpc.Code_INVALID_ARGUMENT)],
+			},
+			&rpc.BadRequest{
+				FieldViolations: []*rpc.BadRequest_FieldViolation{
+					{
+						Field:       invalidValueError.FieldName,
+						Description: invalidValueError.Error(),
+					},
+				},
+			},
+		)
+
+		if errorStatus != nil {
+			return &articlesv1.CreateArticleResponse{
+				Request: request,
+				Status:  errorStatus,
+			}
+		}
+
+		return &articlesv1.CreateArticleResponse{
+			Request: request,
+			Status: &rpc.Status{
+				Code:    int32(rpc.Code_INVALID_ARGUMENT),
+				Message: invalidValueError.Error(),
+				Details: details,
+			},
+		}
 	}
 
-	return &articlesv1.CreateArticleResponse_Error_InvalidField{InvalidField: &articlesv1.CreateArticleResponse_ErrorInvalidField{FieldName: &invalidFieldName}}
-}
-
-func Create(request *articlesv1.CreateArticleRequest) *articlesv1.CreateArticleResponse {
-	log.Print("create article: ", request)
-
-	body := request.GetBody()
-	title := request.GetTitle()
-
-	errorInvalidFieldName := mustBeValid(body, title)
-
-	if errorInvalidFieldName != nil {
-		response := &articlesv1.CreateArticleResponse_Error_{Error: &articlesv1.CreateArticleResponse_Error{ErrorType: errorInvalidFieldName}}
-
-		return &articlesv1.CreateArticleResponse{Request: request, Response: response}
-	}
-
-	article, err := db.CreateArticle(body, title)
-
-	if err != nil {
-		response := &articlesv1.CreateArticleResponse_Error_{Error: &articlesv1.CreateArticleResponse_Error{ErrorType: &articlesv1.CreateArticleResponse_Error_DuplicateTitle{}}}
-
-		return &articlesv1.CreateArticleResponse{Request: request, Response: response}
-	}
-
-	createdAt := article.CreatedAt.Unix()
-
-	response := &articlesv1.CreateArticleResponse_Ok{Ok: &articlesv1.CreateArticleResponse_OkResponse{CreatedAt: &createdAt, Id: &article.ID}}
-
-	return &articlesv1.CreateArticleResponse{Request: request, Response: response}
+	return nil
 }

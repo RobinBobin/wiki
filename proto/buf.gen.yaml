@@ -1,6 +1,14 @@
 version: v2
 clean: true
 
+inputs:
+  - directory: .
+  - module: buf.build/googleapis/googleapis
+    paths:
+      - google/rpc/code.proto
+      - google/rpc/error_details.proto
+      - google/rpc/status.proto
+
 managed:
   enabled: true
   override:
