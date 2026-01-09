@@ -52,7 +52,7 @@ export const Address: React.FC = observer(() => {
           value={address}
         />
         <VerticalGap height={15} />
-        <Button labelStyle={{ flex: 1 }} mode='contained' onPress={connect}>
+        <Button labelStyle={styles.button} mode='contained' onPress={connect}>
           {titles[state]}
         </Button>
       </View>
