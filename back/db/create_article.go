@@ -1,7 +1,12 @@
 package db
 
+import "strings"
+
 func CreateArticle(body, title string) (*article, error) {
-	article := &article{Body: body, Title: title}
+	article := &article{
+		Body:  strings.TrimSpace(body),
+		Title: strings.TrimSpace(title),
+	}
 
 	result := db.Create(article)
 

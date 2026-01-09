@@ -1,10 +1,9 @@
 package db
 
 import (
-	"strings"
+	dberrors "wiki/db/errors"
 
 	"gorm.io/gorm"
-	dberrors "wiki/db/errors"
 )
 
 type article struct {
@@ -20,13 +19,9 @@ func (article *article) BeforeCreate(
 ) error {
 	var invalidFieldName string
 
-	if len(
-		strings.TrimSpace(
-			article.Body,
-		),
-	) == 0 {
+	if len(article.Body) == 0 {
 		invalidFieldName = "body"
-	} else if len(strings.TrimSpace(article.Title)) == 0 {
+	} else if len(article.Title) == 0 {
 		invalidFieldName = "title"
 	} else {
 		return nil
