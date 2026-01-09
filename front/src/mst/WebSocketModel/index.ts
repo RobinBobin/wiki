@@ -1,6 +1,8 @@
 import type { TWebSocketState } from '@types'
-import type { IWebSocketModelVolatile } from './types'
+import type { IWebSocketModelVolatile, TClientEnvelopePayload } from './types'
 
+import { create, toBinary } from '@bufbuild/protobuf'
+import { ClientEnvelopeSchema } from '@gen/wiki/envelope/v1/client_pb'
 import { types } from 'mobx-state-tree'
 
 import { onMessage } from './onMessage'
@@ -62,6 +64,15 @@ const WebSocketModel = types
       self.shouldReconnect = true
 
       self._open()
+    },
+
+    // eslint-disable-next-line @typescript-eslint/prefer-readonly-parameter-types
+    send(this: void, payload: TClientEnvelopePayload): void {
+      const envelope = create(ClientEnvelopeSchema, {
+        payload
+      })
+
+      self.ws?.send(toBinary(ClientEnvelopeSchema, envelope))
     }
   }))
 

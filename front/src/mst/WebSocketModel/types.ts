@@ -1,3 +1,4 @@
+import type { ClientEnvelope } from '@gen/wiki/envelope/v1/client_pb'
 import type { TWebSocketState } from '@types'
 
 interface IWebSocketModelVolatile {
@@ -7,4 +8,6 @@ interface IWebSocketModelVolatile {
   ws?: WebSocket | undefined
 }
 
-export type { IWebSocketModelVolatile }
+type TClientEnvelopePayload = ClientEnvelope['payload']
+
+export type { IWebSocketModelVolatile, TClientEnvelopePayload }
