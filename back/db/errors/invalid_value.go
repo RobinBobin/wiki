@@ -8,7 +8,7 @@ type InvalidValueError struct {
 
 func (err InvalidValueError) Error() string {
 	return fmt.Sprintf(
-		"'%s': has an invalid value",
+		"'%s' has an invalid value",
 		err.FieldName,
 	)
 }
