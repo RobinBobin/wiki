@@ -30,15 +30,18 @@ func Create(
 	invalidValueError, ok := err.(*dberrors.InvalidValueError)
 
 	if ok {
+		reason := rpc.Code_name[int32(rpc.Code_INVALID_ARGUMENT)]
+
 		details, errorStatus := utils.PackToAny(
 			&rpc.ErrorInfo{
-				Reason: rpc.Code_name[int32(rpc.Code_INVALID_ARGUMENT)],
+				Reason: reason,
 			},
 			&rpc.BadRequest{
 				FieldViolations: []*rpc.BadRequest_FieldViolation{
 					{
 						Field:       invalidValueError.FieldName,
 						Description: invalidValueError.Error(),
+						Reason:      reason,
 					},
 				},
 			},
