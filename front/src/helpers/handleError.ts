@@ -6,7 +6,7 @@ export const handleError = (error: unknown): void => {
   const message =
     isError(error) ?
       error.message
-    : `An unknown error of type ${typeof error}: ${String(error)}`
+    : `An unknown error of type '${typeof error}':\n${String(error)}`
 
   alert(message)
 }
