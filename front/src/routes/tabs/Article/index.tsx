@@ -1,51 +1,26 @@
-import Alert from '@blazejkustra/react-native-alert'
-import { create } from '@bufbuild/protobuf'
 import { commonStyles, Screen, VerticalGap, View } from '@commonComponents'
-import { CreateArticleRequestSchema } from '@gen/wiki/articles/v1/create_article_request_pb'
-import { articles, webSocket } from '@mst'
+import { articles } from '@mst'
 import { observer } from 'mobx-react-lite'
 import { useEffect, useState } from 'react'
 import { KeyboardAvoidingView } from 'react-native'
 import { Button, TextInput } from 'react-native-paper'
 
+import { onClearAll, onSave } from './helpers'
 import styles from './styles'
 
-// eslint-disable-next-line max-lines-per-function
 export const Article: React.FC = observer(() => {
   const [body, setBody] = useState('')
   const [title, setTitle] = useState('')
 
-  const { badRequest, errorInfo, response } = articles.createArticles
-  const { send } = webSocket
-
-  const onClearAll = (): void => {
-    Alert.alert(
-      'Clear all content?',
-      '',
-      [
-        {
-          text: 'No'
-        },
-        {
-          onPress(): void {
-            setBody('')
-            setTitle('')
-          },
-          text: 'Yes'
-        }
-      ],
-      { cancelable: true }
-    )
-  }
-
-  const onSave = (): void => {
-    send({
-      case: 'createArticle',
-      value: create(CreateArticleRequestSchema, { body, title })
-    })
-  }
+  const { badRequest, errorInfo, isOk, response } = articles.createArticles
 
   useEffect(() => {
+    if (isOk) {
+      return
+    }
+
+    console.log(response?.status?.code)
+
     if (badRequest) {
       console.log(badRequest)
     }
@@ -53,15 +28,13 @@ export const Article: React.FC = observer(() => {
     if (errorInfo) {
       console.log(errorInfo)
     }
-
-    console.log(response?.id, response?.createdAt)
-  }, [badRequest, errorInfo, response])
+  }, [badRequest, errorInfo, isOk, response])
 
   return (
     <Screen>
       <View style={styles.topContainer}>
-        <Button onPress={onClearAll}>Clear all</Button>
-        <Button onPress={onSave}>Create</Button>
+        <Button onPress={onClearAll(setBody, setTitle)}>Clear all</Button>
+        <Button onPress={onSave(body, title)}>Create</Button>
       </View>
       <TextInput onChangeText={setTitle} placeholder='Title' value={title} />
       <VerticalGap height={20} />

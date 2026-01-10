@@ -2,7 +2,6 @@ import type {
   TServerEnvelopePayloadCase,
   TServerEnvelopePayloadValue
 } from '../types'
-import type { IWithResponseVolatile } from './types'
 
 import { isMessage } from '@bufbuild/protobuf'
 import { anyUnpack } from '@bufbuild/protobuf/wkt'
@@ -15,14 +14,12 @@ import { handleError } from '@helpers/handleError'
 import { types } from 'mobx-state-tree'
 import { isUndefined } from 'radashi'
 
+import { getDefaultVolatile } from './getDefaultVolatile'
 import { REGISTRY } from './registry'
 
 export const WithResponse = types
   .model('WithResponse')
-  .volatile<IWithResponseVolatile>(() => ({}))
-  // .views(self => ({
-  //   get
-  // }))
+  .volatile(getDefaultVolatile)
   .actions(self => ({
     _setResponse(
       this: void,
@@ -30,19 +27,30 @@ export const WithResponse = types
       response: TServerEnvelopePayloadValue,
       tag: TServerEnvelopePayloadCase
     ): void {
+      self.badRequest = undefined
+      self.errorInfo = undefined
       self.response = response
 
       const { status } = self.response
 
-      if (status?.code === Code.OK) {
-        self.badRequest = undefined
-        self.errorInfo = undefined
+      self.isOk = status?.code === Code.OK
 
+      if (self.isOk) {
         return
       }
 
       if (isUndefined(status)) {
         handleError(new Error(`No status in a '${tag}' response`))
+
+        return
+      }
+
+      const isGeneralError =
+        [Code.INTERNAL, Code.UNKNOWN].includes(status.code) &&
+        !status.details.length
+
+      if (isGeneralError) {
+        handleError(new Error('Your request failed.'))
 
         return
       }

@@ -6,5 +6,6 @@ export interface IWithResponseVolatile<
 > {
   badRequest?: BadRequest | undefined
   errorInfo?: ErrorInfo | undefined
+  isOk: boolean
   response?: T
 }
