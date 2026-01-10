@@ -12,6 +12,8 @@ import (
 )
 
 func handleWebSocket(connection *websocket.Conn) {
+	defer utils.HandlePanic()
+
 	cleanup := func() {
 		err := connection.Close()
 
