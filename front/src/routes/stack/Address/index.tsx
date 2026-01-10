@@ -34,6 +34,8 @@ export const Address: React.FC = observer(() => {
   useEffect(() => {
     if (state === 'open') {
       router.navigate('/home')
+    } else if (router.canDismiss()) {
+      router.dismissAll()
     }
   }, [state])
 
