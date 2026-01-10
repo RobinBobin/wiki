@@ -2,7 +2,6 @@ import type { StyleProp, ViewStyle } from 'react-native'
 import type { IPaddingOptions } from './types'
 
 import { COLOR } from '@enums'
-import { StyleSheet } from 'react-native'
 
 const screenPadding = 15
 
@@ -24,9 +23,3 @@ const getContainerStyle = ({
 ]
 
 export { getContainerStyle }
-
-export default StyleSheet.create({
-  safeArea: {
-    flex: 1
-  }
-})

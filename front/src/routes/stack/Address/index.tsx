@@ -1,6 +1,6 @@
 import type { TWebSocketState } from '@types'
 
-import { Screen, VerticalGap, View } from '@commonComponents'
+import { commonStyles, Screen, VerticalGap, View } from '@commonComponents'
 import { webSocket } from '@mst'
 import { router } from 'expo-router'
 import { observer } from 'mobx-react-lite'
@@ -54,7 +54,11 @@ export const Address: React.FC = observer(() => {
           value={address}
         />
         <VerticalGap height={15} />
-        <Button labelStyle={styles.button} mode='contained' onPress={connect}>
+        <Button
+          labelStyle={commonStyles.flex1}
+          mode='contained'
+          onPress={connect}
+        >
           {titles[state]}
         </Button>
       </View>

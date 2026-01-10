@@ -1,3 +1,4 @@
+export { default as commonStyles } from './commonStyles'
 export { HorizontalGap } from './HorizontalGap'
 export { Pressable } from './Pressable'
 export { Screen } from './Screen'
