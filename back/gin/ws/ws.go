@@ -1,8 +1,6 @@
 package ws
 
 import (
-	"fmt"
-	"log"
 	"net/http"
 
 	"github.com/gin-gonic/gin"
@@ -11,18 +9,15 @@ import (
 
 	// articlesv1 "wiki/gen/wiki/articles/v1"
 	envelopev1 "wiki/gen/wiki/envelope/v1"
+	"wiki/utils"
 )
-
-func handleError(err error, tag string) {
-	log.Print(fmt.Sprint(tag, " error: ", err))
-}
 
 func handleWebSocket(connection *websocket.Conn) {
 	cleanup := func() {
 		err := connection.Close()
 
 		if err != nil {
-			handleError(err, "Close")
+			utils.LogError(err, "Close ws")
 		}
 	}
 
@@ -32,7 +27,8 @@ func handleWebSocket(connection *websocket.Conn) {
 		_, clientPacket, err := connection.ReadMessage()
 
 		if err != nil {
-			handleError(err, "Read")
+			utils.LogError(err, "Read from ws")
+
 			break
 		}
 
@@ -41,22 +37,29 @@ func handleWebSocket(connection *websocket.Conn) {
 		err = proto.Unmarshal(clientPacket, clientEnvelope)
 
 		if err != nil {
-			handleError(err, "Unmarshal")
+			utils.LogError(err, "Unmarshal request")
+
 			break
 		}
 
 		serverEnvelope := route(clientEnvelope)
 
-		if serverEnvelope != nil {
-			serverPacket, err := proto.Marshal(serverEnvelope)
+		if serverEnvelope == nil {
+			continue
+		}
 
-			if err != nil {
-				handleError(err, "Marshal")
-			}
+		serverPacket, err := proto.Marshal(serverEnvelope)
 
-			err = connection.WriteMessage(websocket.BinaryMessage, serverPacket)
+		if err != nil {
+			utils.LogError(err, "Marshal response")
 
-			handleError(err, "Write")
+			break
+		}
+
+		err = connection.WriteMessage(websocket.BinaryMessage, serverPacket)
+
+		if err != nil {
+			utils.LogError(err, "Write to ws")
 		}
 	}
 }
@@ -71,7 +74,8 @@ func GetWS(ctx *gin.Context) {
 	connection, err := upgrader.Upgrade(ctx.Writer, ctx.Request, nil)
 
 	if err != nil {
-		handleError(err, "Upgrade")
+		utils.LogError(err, "Upgrade to ws")
+
 		return
 	}
 
