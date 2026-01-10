@@ -11,10 +11,14 @@ const WebSocketModel = types
   .model('WebSocketModel')
   .volatile<IWebSocketModelVolatile>(() => ({
     address: '',
+    connectionAttemptCount: 0,
     shouldReconnect: true,
     state: 'closed'
   }))
   .actions(self => ({
+    _resetConnectionAttemptCount(): void {
+      self.connectionAttemptCount = 0
+    },
     _setState(state: TWebSocketState): void {
       self.state = state
     }
@@ -22,6 +26,8 @@ const WebSocketModel = types
   .actions(self => ({
     _open(): void {
       self._setState('connecting')
+
+      ++self.connectionAttemptCount
 
       self.ws = new WebSocket(`ws://${self.address}/ws`)
 
@@ -32,13 +38,19 @@ const WebSocketModel = types
           return
         }
 
+        const maxConnectionAttempts = 3
+
+        if (self.connectionAttemptCount === maxConnectionAttempts) {
+          self._setState('closed')
+
+          return
+        }
+
         const reconnectionDelay = 3000
 
         setTimeout(() => {
           if (self.shouldReconnect) {
             this._open()
-          } else {
-            self._setState('closed')
           }
         }, reconnectionDelay)
       }
@@ -46,6 +58,7 @@ const WebSocketModel = types
       self.ws.onmessage = onMessage
 
       self.ws.onopen = (): void => {
+        self._resetConnectionAttemptCount()
         self._setState('open')
       }
     }
@@ -62,6 +75,8 @@ const WebSocketModel = types
     open(this: void, address: string): void {
       self.address = address
       self.shouldReconnect = true
+
+      self._resetConnectionAttemptCount()
 
       self._open()
     },

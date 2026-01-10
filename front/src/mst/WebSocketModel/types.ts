@@ -3,6 +3,7 @@ import type { TWebSocketState } from '@types'
 
 interface IWebSocketModelVolatile {
   address: string
+  connectionAttemptCount: number
   shouldReconnect: boolean
   state: TWebSocketState
   ws?: WebSocket | undefined
