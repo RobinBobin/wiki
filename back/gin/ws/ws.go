@@ -7,7 +7,6 @@ import (
 	"github.com/gorilla/websocket"
 	"google.golang.org/protobuf/proto"
 
-	// articlesv1 "wiki/gen/wiki/articles/v1"
 	envelopev1 "wiki/gen/wiki/envelope/v1"
 	"wiki/utils"
 )
