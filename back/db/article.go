@@ -11,7 +11,7 @@ type article struct {
 
 	Body  string
 	ID    uint32 `gorm:"primarykey"`
-	Title string `gorm:"uniqueIndex"`
+	Title string `gorm:"type:text COLLATE NOCASE;uniqueIndex"`
 }
 
 func (article *article) BeforeCreate(
