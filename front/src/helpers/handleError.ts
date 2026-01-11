@@ -1,12 +1,11 @@
+import { snackbarModel } from '@mst/SnackbarModel'
 import { isError } from 'radashi'
 
-import { alert } from './alert'
-
 export const handleError = (error: unknown): void => {
-  const message =
+  const text =
     isError(error) ?
       error.message
     : `An unknown error of type '${typeof error}':\n${String(error)}`
 
-  alert(message)
+  snackbarModel.show({ duration: 5000, text })
 }
