@@ -3,7 +3,7 @@ import type { TResponseStatusCodeHandlers } from '@hooks'
 import { commonStyles, Screen, VerticalGap, View } from '@commonComponents'
 import { Code } from '@gen/google/rpc/code_pb'
 import { useResponseStatusCode } from '@hooks'
-import { articles } from '@mst'
+import { articles, snackbarModel } from '@mst'
 import { observer } from 'mobx-react-lite'
 import { useMemo, useState } from 'react'
 import { KeyboardAvoidingView } from 'react-native'
@@ -26,7 +26,7 @@ export const Article: React.FC = observer(() => {
         //
       },
       [Code.ALREADY_EXISTS]: (): void => {
-        console.log('Already exists')
+        snackbarModel.show({ text: 'This article already exists.' })
       },
       [Code.INVALID_ARGUMENT]: (): void => {
         const setState =
