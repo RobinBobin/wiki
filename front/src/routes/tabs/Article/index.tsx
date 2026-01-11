@@ -16,11 +16,11 @@ export const Article: React.FC = observer(() => {
   const [isTitleInvalid, setIsTitleInvalid] = useState(false)
   const [title, setTitle] = useState('')
 
-  const { badRequest, errorInfo, isOk, response } = articles.createArticles
+  const { badRequest, errorInfo, payload } = articles.createArticles
 
   useEffect(() => {
     // eslint-disable-next-line @typescript-eslint/switch-exhaustiveness-check
-    switch (response?.status?.code) {
+    switch (payload?.value.status?.code) {
       case Code.OK:
         break
 
@@ -42,7 +42,7 @@ export const Article: React.FC = observer(() => {
       default:
         break
     }
-  }, [badRequest, errorInfo, isOk, response])
+  }, [badRequest, errorInfo, payload])
 
   return (
     <Screen>

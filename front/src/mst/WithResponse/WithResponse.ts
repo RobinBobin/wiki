@@ -1,7 +1,5 @@
-import type {
-  TServerEnvelopePayloadCase,
-  TServerEnvelopePayloadValue
-} from '../types'
+import type { TServerEnvelopePayload } from '../types'
+import type { IWithResponseVolatile } from './types'
 
 import { isMessage } from '@bufbuild/protobuf'
 import { anyUnpack } from '@bufbuild/protobuf/wkt'
@@ -14,33 +12,29 @@ import { handleError } from '@helpers/handleError'
 import { types } from 'mobx-state-tree'
 import { isUndefined } from 'radashi'
 
-import { getDefaultVolatile } from './getDefaultVolatile'
 import { REGISTRY } from './registry'
 
 export const WithResponse = types
   .model('WithResponse')
-  .volatile(getDefaultVolatile)
+  .volatile<IWithResponseVolatile>(() => ({}))
   .actions(self => ({
-    _setResponse(
+    setResponse(
       this: void,
       // eslint-disable-next-line @typescript-eslint/prefer-readonly-parameter-types
-      response: TServerEnvelopePayloadValue,
-      tag: TServerEnvelopePayloadCase
+      payload: TServerEnvelopePayload
     ): void {
       self.badRequest = undefined
       self.errorInfo = undefined
-      self.response = response
+      self.payload = payload
 
-      const { status } = self.response
+      const { status } = self.payload.value
 
-      self.isOk = status?.code === Code.OK
-
-      if (self.isOk) {
+      if (status?.code === Code.OK) {
         return
       }
 
       if (isUndefined(status)) {
-        handleError(new Error(`No status in a '${tag}' response`))
+        handleError(new Error(`No status in a '${self.payload.case}' response`))
 
         return
       }

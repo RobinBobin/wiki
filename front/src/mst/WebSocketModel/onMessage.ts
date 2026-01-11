@@ -8,11 +8,11 @@ export const onMessage: WebSocket['onmessage'] = event => {
   try {
     const { data } = event as MessageEvent<ArrayBuffer>
     const { payload } = fromBinary(ServerEnvelopeSchema, new Uint8Array(data))
-    const { case: pcase, value } = payload
+    const { case: pcase } = payload
 
     switch (pcase) {
       case 'createArticle': {
-        articles.createArticles.setResponse(value)
+        articles.createArticles.setResponse(payload)
         break
       }
 

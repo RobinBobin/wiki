@@ -1,12 +1,10 @@
-import type { CreateArticleResponse } from '@gen/wiki/articles/v1/create_article_response_pb'
+import type { TServerEnvelopePayload } from '../../types'
+import type { IWithResponseVolatile } from '../../WithResponse'
 
-import { getDefaultVolatile, WithResponse } from '../../WithResponse'
+import { WithResponse } from '../../WithResponse'
 
-export const CreateArticles = WithResponse.named('CreateArticles')
-  .volatile(() => getDefaultVolatile<CreateArticleResponse>())
-  .actions(self => ({
-    // eslint-disable-next-line @typescript-eslint/prefer-readonly-parameter-types
-    setResponse(this: void, response: CreateArticleResponse): void {
-      self._setResponse(response, 'createArticle')
-    }
-  }))
+type TPayload = Extract<TServerEnvelopePayload, { case: 'createArticle' }>
+
+export const CreateArticles = WithResponse.named('CreateArticles').volatile<
+  IWithResponseVolatile<TPayload>
+>(() => ({}))
