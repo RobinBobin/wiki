@@ -1,48 +1,46 @@
+import type { TResponseStatusCodeHandlers } from '@hooks'
+
 import { commonStyles, Screen, VerticalGap, View } from '@commonComponents'
 import { Code } from '@gen/google/rpc/code_pb'
+import { useResponseStatusCode } from '@hooks'
 import { articles } from '@mst'
 import { observer } from 'mobx-react-lite'
-import { useEffect, useState } from 'react'
+import { useMemo, useState } from 'react'
 import { KeyboardAvoidingView } from 'react-native'
 import { Button, HelperText, TextInput } from 'react-native-paper'
 
 import { onClearAll, onSave, setTextAndResetError } from './helpers'
 import styles from './styles'
 
-// eslint-disable-next-line max-lines-per-function
 export const Article: React.FC = observer(() => {
   const [body, setBody] = useState('')
   const [isBodyInvalid, setIsBodyInvalid] = useState(false)
   const [isTitleInvalid, setIsTitleInvalid] = useState(false)
   const [title, setTitle] = useState('')
 
-  const { badRequest, errorInfo, payload } = articles.createArticles
+  const { badRequest, payload } = articles.createArticles
 
-  useEffect(() => {
-    // eslint-disable-next-line @typescript-eslint/switch-exhaustiveness-check
-    switch (payload?.value.status?.code) {
-      case Code.OK:
-        break
-
-      case Code.ALREADY_EXISTS:
+  const handlers = useMemo<TResponseStatusCodeHandlers>(
+    () => ({
+      [Code.OK]: (): void => {
+        //
+      },
+      [Code.ALREADY_EXISTS]: (): void => {
         console.log('Already exists')
-        break
-
-      case Code.INVALID_ARGUMENT: {
+      },
+      [Code.INVALID_ARGUMENT]: (): void => {
         const setState =
           badRequest?.fieldViolations[0]?.field === 'body' ?
             setIsBodyInvalid
           : setIsTitleInvalid
 
         setState(true)
-
-        break
       }
+    }),
+    [badRequest]
+  )
 
-      default:
-        break
-    }
-  }, [badRequest, errorInfo, payload])
+  useResponseStatusCode(handlers, payload, 'Article')
 
   return (
     <Screen>
