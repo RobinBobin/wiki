@@ -2,11 +2,9 @@ import type { Dispatch, SetStateAction } from 'react'
 
 import Alert from '@blazejkustra/react-native-alert'
 
-type TSetState = Dispatch<SetStateAction<string>>
-
 export const onClearAll = (
-  setBody: TSetState,
-  setTitle: TSetState
+  setBody: Dispatch<SetStateAction<string>>,
+  setTitle: Dispatch<SetStateAction<string>>
 ): (() => void) => {
   return () => {
     Alert.alert(
