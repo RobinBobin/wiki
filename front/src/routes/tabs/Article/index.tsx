@@ -23,7 +23,7 @@ export const Article: React.FC = observer(() => {
   const handlers = useMemo<TResponseStatusCodeHandlers>(
     () => ({
       [Code.OK]: (): void => {
-        //
+        snackbarModel.show({ text: 'Article created.' })
       },
       [Code.ALREADY_EXISTS]: (): void => {
         snackbarModel.show({ text: 'This article already exists.' })
