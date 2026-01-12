@@ -1,0 +1,9 @@
+edition = "2023";
+
+package wiki.defresponse.v1;
+
+import "google/rpc/status.proto";
+
+message DefaultResponse {
+  google.rpc.Status status = 1;
+}

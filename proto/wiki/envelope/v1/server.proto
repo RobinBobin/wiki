@@ -4,10 +4,12 @@ package wiki.envelope.v1;
 
 import "wiki/article/v1/create_article_response.proto";
 import "wiki/article/v1/search_articles_response.proto";
+import "wiki/defresponse/v1/default_response.proto";
 
 message ServerEnvelope {
   oneof payload {
     wiki.article.v1.SearchArticlesResponse search_articles = 1;
     wiki.article.v1.CreateArticleResponse create_article = 2;
+    wiki.defresponse.v1.DefaultResponse default_response = 3;
   }
 }
