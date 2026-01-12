@@ -6,7 +6,7 @@ import (
 	"wiki/db"
 	dberrors "wiki/db/errors"
 	"wiki/gen/google/rpc"
-	articlesv1 "wiki/gen/wiki/articles/v1"
+	articlev1 "wiki/gen/wiki/article/v1"
 	"wiki/utils"
 
 	"gorm.io/gorm"
@@ -14,13 +14,13 @@ import (
 
 func handleDefaultError(
 	err error,
-	request *articlesv1.CreateArticleRequest,
-) *articlesv1.CreateArticleResponse {
+	request *articlev1.CreateArticleRequest,
+) *articlev1.CreateArticleResponse {
 	log.Print("handleDefaultError()")
 	log.Printf("Request: %v", request)
 	log.Printf("Error: %v", err)
 
-	return &articlesv1.CreateArticleResponse{
+	return &articlev1.CreateArticleResponse{
 		Request: request,
 		Status: &rpc.Status{
 			Code: int32(rpc.Code_INTERNAL),
@@ -30,13 +30,13 @@ func handleDefaultError(
 
 func handleDuplicateKeyError(
 	err error,
-	request *articlesv1.CreateArticleRequest,
-) *articlesv1.CreateArticleResponse {
+	request *articlev1.CreateArticleRequest,
+) *articlev1.CreateArticleResponse {
 	if !errors.Is(err, gorm.ErrDuplicatedKey) {
 		return nil
 	}
 
-	return &articlesv1.CreateArticleResponse{
+	return &articlev1.CreateArticleResponse{
 		Request: request,
 		Status: &rpc.Status{
 			Code: int32(rpc.Code_ALREADY_EXISTS),
@@ -46,8 +46,8 @@ func handleDuplicateKeyError(
 
 func handleInvalidValueError(
 	err error,
-	request *articlesv1.CreateArticleRequest,
-) *articlesv1.CreateArticleResponse {
+	request *articlev1.CreateArticleRequest,
+) *articlev1.CreateArticleResponse {
 	invalidValueError, ok := err.(*dberrors.InvalidValueError)
 
 	if !ok {
@@ -72,13 +72,13 @@ func handleInvalidValueError(
 	)
 
 	if errorStatus != nil {
-		return &articlesv1.CreateArticleResponse{
+		return &articlev1.CreateArticleResponse{
 			Request: request,
 			Status:  errorStatus,
 		}
 	}
 
-	return &articlesv1.CreateArticleResponse{
+	return &articlev1.CreateArticleResponse{
 		Request: request,
 		Status: &rpc.Status{
 			Code:    int32(rpc.Code_INVALID_ARGUMENT),
@@ -89,8 +89,8 @@ func handleInvalidValueError(
 }
 
 func Create(
-	request *articlesv1.CreateArticleRequest,
-) *articlesv1.CreateArticleResponse {
+	request *articlev1.CreateArticleRequest,
+) *articlev1.CreateArticleResponse {
 	article, err := db.CreateArticle(
 		request.GetBody(),
 		request.GetTitle(),
@@ -99,7 +99,7 @@ func Create(
 	if err == nil {
 		createdAt := article.CreatedAt.Unix()
 
-		return &articlesv1.CreateArticleResponse{
+		return &articlev1.CreateArticleResponse{
 			Request:   request,
 			CreatedAt: &createdAt,
 			Id:        &article.ID,

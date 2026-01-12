@@ -1,9 +1,9 @@
 edition = "2023";
 
-package wiki.articles.v1;
+package wiki.article.v1;
 
 import "google/rpc/status.proto";
-import "wiki/articles/v1/create_article_request.proto";
+import "wiki/article/v1/create_article_request.proto";
 
 message CreateArticleResponse {
   CreateArticleRequest request = 1;

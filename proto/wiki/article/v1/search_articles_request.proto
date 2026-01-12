@@ -1,6 +1,6 @@
 edition = "2023";
 
-package wiki.articles.v1;
+package wiki.article.v1;
 
 message SearchArticlesRequest {
   string query = 1;

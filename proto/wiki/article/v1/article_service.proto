@@ -1,0 +1,13 @@
+edition = "2023";
+
+package wiki.article.v1;
+
+import "wiki/article/v1/create_article_request.proto";
+import "wiki/article/v1/create_article_response.proto";
+import "wiki/article/v1/search_articles_request.proto";
+import "wiki/article/v1/search_articles_response.proto";
+
+service ArticleService {
+  rpc CreateArticle(CreateArticleRequest) returns (CreateArticleResponse);
+  rpc SearchArticles(SearchArticlesRequest) returns (SearchArticlesResponse);
+}
