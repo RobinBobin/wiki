@@ -16,6 +16,10 @@ export const onMessage: WebSocket['onmessage'] = event => {
         break
       }
 
+      case 'defaultResponse':
+        handleError(new Error(payload.value.status?.message))
+        break
+
       case 'searchArticles':
         break
 
