@@ -4,6 +4,4 @@ package wiki.articles.v1;
 
 message SearchArticlesRequest {
   string query = 1;
-  int32 page_number = 2;
-  int32 results_per_page = 3;
 }
