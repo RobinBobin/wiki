@@ -7,7 +7,7 @@ import "wiki/article/v1/article.proto";
 import "wiki/article/v1/search_articles_request.proto";
 
 message SearchArticlesResponse {
-  repeated Article article = 1;
+  repeated Article articles = 1;
   SearchArticlesRequest request = 2;
   google.rpc.Status status = 3;
 }
