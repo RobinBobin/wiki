@@ -12,7 +12,7 @@ export const onMessage: WebSocket['onmessage'] = event => {
 
     switch (pcase) {
       case 'createArticle': {
-        articles.createArticles.setResponse(payload)
+        articles.createArticleResponse.setPayload(payload)
         break
       }
 

@@ -18,7 +18,7 @@ export const Article: React.FC = observer(() => {
   const [isTitleInvalid, setIsTitleInvalid] = useState(false)
   const [title, setTitle] = useState('')
 
-  const { badRequest, payload } = articles.createArticles
+  const { badRequest, payload } = articles.createArticleResponse
 
   const handlers = useMemo<TResponseStatusCodeHandlers>(
     () => ({

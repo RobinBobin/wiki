@@ -1,9 +1,9 @@
 import { types } from 'mobx-state-tree'
 
-import { CreateArticles } from './CreateArticles'
+import { CreateArticleResponse } from './CreateArticleResponse'
 
 const Articles = types.model('Articles', {
-  createArticles: types.optional(CreateArticles, {})
+  createArticleResponse: types.optional(CreateArticleResponse, {})
 })
 
 export const articles = Articles.create()

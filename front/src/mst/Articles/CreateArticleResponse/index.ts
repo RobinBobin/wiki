@@ -5,6 +5,6 @@ import { WithResponse } from '../../WithResponse'
 
 type TPayload = Extract<TServerEnvelopePayload, { case: 'createArticle' }>
 
-export const CreateArticles = WithResponse.named('CreateArticles').volatile<
-  IWithResponseVolatile<TPayload>
->(() => ({}))
+export const CreateArticleResponse = WithResponse.named(
+  'CreateArticle'
+).volatile<IWithResponseVolatile<TPayload>>(() => ({}))

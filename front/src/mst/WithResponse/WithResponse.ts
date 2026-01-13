@@ -18,7 +18,7 @@ export const WithResponse = types
   .model('WithResponse')
   .volatile<IWithResponseVolatile>(() => ({}))
   .actions(self => ({
-    setResponse(
+    setPayload(
       this: void,
       // eslint-disable-next-line @typescript-eslint/prefer-readonly-parameter-types
       payload: TServerEnvelopePayload
