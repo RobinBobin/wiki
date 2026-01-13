@@ -1,10 +1,10 @@
+import type { IBaseResponseVolatile } from '../../BaseResponse'
 import type { TServerEnvelopePayload } from '../../types'
-import type { IWithResponseVolatile } from '../../WithResponse'
 
-import { WithResponse } from '../../WithResponse'
+import { BaseResponse } from '../../BaseResponse'
 
 type TPayload = Extract<TServerEnvelopePayload, { case: 'createArticle' }>
 
-export const CreateArticleResponse = WithResponse.named(
+export const CreateArticleResponse = BaseResponse.named(
   'CreateArticle'
-).volatile<IWithResponseVolatile<TPayload>>(() => ({}))
+).volatile<IBaseResponseVolatile<TPayload>>(() => ({}))

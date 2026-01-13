@@ -1,5 +1,5 @@
 import type { TServerEnvelopePayload } from '../types'
-import type { IWithResponseVolatile } from './types'
+import type { IBaseResponseVolatile } from './types'
 
 import { isMessage } from '@bufbuild/protobuf'
 import { anyUnpack } from '@bufbuild/protobuf/wkt'
@@ -14,9 +14,9 @@ import { isUndefined } from 'radashi'
 
 import { REGISTRY } from './registry'
 
-export const WithResponse = types
-  .model('WithResponse')
-  .volatile<IWithResponseVolatile>(() => ({}))
+export const BaseResponse = types
+  .model('BaseResponse')
+  .volatile<IBaseResponseVolatile>(() => ({}))
   .actions(self => ({
     setPayload(
       this: void,
