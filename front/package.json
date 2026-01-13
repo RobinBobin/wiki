@@ -32,6 +32,7 @@
     "react-native-worklets": "0.5.1",
     "react-use": "^17.6.0",
     "semver": "^7.7.3",
+    "simple-common-utils": "^3.5.1",
     "type-fest": "^5.3.1"
   },
   "devDependencies": {

@@ -11,6 +11,7 @@ import {
 import { handleError } from '@helpers/handleError'
 import { types } from 'mobx-state-tree'
 import { isUndefined } from 'radashi'
+import { MstFormattedError } from 'simple-common-utils'
 
 import { REGISTRY } from './registry'
 
@@ -18,7 +19,7 @@ export const BaseResponse = types
   .model('BaseResponse')
   .volatile<IBaseResponseVolatile>(() => ({}))
   .actions(self => ({
-    setPayload(
+    _setPayload(
       this: void,
       // eslint-disable-next-line @typescript-eslint/prefer-readonly-parameter-types
       payload: TServerEnvelopePayload
@@ -58,5 +59,19 @@ export const BaseResponse = types
           self.errorInfo = unpacked
         }
       }
+    },
+    setPayload(
+      this: void,
+      // @ts-expect-error 'payload' is declared but its value is never read
+      // eslint-disable-next-line @typescript-eslint/prefer-readonly-parameter-types, @typescript-eslint/no-unused-vars
+      payload: TServerEnvelopePayload
+    ): void {
+      handleError(
+        new MstFormattedError({
+          entityName: 'setPayload()',
+          message: ' must be overriden',
+          model: self
+        })
+      )
     }
   }))
