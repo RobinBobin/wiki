@@ -4,6 +4,6 @@ package wiki.article.v1;
 
 message Article {
   string body = 1;
-  sint32 id = 2;
+  uint32 id = 2;
   string title = 3;
 }
