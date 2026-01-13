@@ -9,7 +9,7 @@ func SearchArticles(query string) []article {
 
 	db.
 		Select("id, title, body").
-		Where("title like ?", fmt.Sprintf("%v%%", query)).
+		Where("LOWER(title) like LOWER(?)", fmt.Sprintf("%v%%", query)).
 		Limit(10).
 		Order("title").
 		Find(&articles)
