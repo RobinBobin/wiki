@@ -60,16 +60,11 @@ export const BaseResponse = types
         }
       }
     },
-    setPayload(
-      this: void,
-      // @ts-expect-error 'payload' is declared but its value is never read
-      // eslint-disable-next-line @typescript-eslint/prefer-readonly-parameter-types, @typescript-eslint/no-unused-vars
-      payload: TServerEnvelopePayload
-    ): void {
+    setPayload(): void {
       handleError(
         new MstFormattedError({
           entityName: 'setPayload()',
-          message: ' must be overriden',
+          message: ' must be implemented',
           model: self
         })
       )
