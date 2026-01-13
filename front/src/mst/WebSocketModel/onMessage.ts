@@ -21,6 +21,7 @@ export const onMessage: WebSocket['onmessage'] = event => {
         break
 
       case 'searchArticles':
+        articles.searchArticles.response.setPayload(payload)
         break
 
       case undefined:
