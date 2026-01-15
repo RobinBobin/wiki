@@ -15,7 +15,7 @@ export const Home: React.FC = observer(() => {
     <Screen>
       <TextInput
         onChangeText={onChangeText}
-        placeholder='Article title'
+        placeholder='Search by article title'
         value={query}
       />
       <VerticalGap height={10} />
