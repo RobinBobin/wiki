@@ -1,12 +1,11 @@
-import type { Dispatch, SetStateAction } from 'react'
+import type { TFieldModelInstanceR } from '@mst'
 import type { TextInputProps } from 'react-native-paper'
 
 export const setTextAndResetError = (
-  setIsInvalid: Dispatch<SetStateAction<boolean>>,
-  setText: Dispatch<SetStateAction<string>>
+  field: TFieldModelInstanceR
 ): Exclude<TextInputProps['onChangeText'], undefined> => {
   return text => {
-    setIsInvalid(false)
-    setText(text)
+    field.setIsInvalid(false)
+    field.setText(text)
   }
 }

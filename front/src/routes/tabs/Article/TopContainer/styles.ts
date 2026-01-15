@@ -1,7 +1,7 @@
 import { StyleSheet } from 'react-native'
 
 export default StyleSheet.create({
-  topContainer: {
+  container: {
     flexDirection: 'row',
     justifyContent: 'space-around',
     marginBottom: 15

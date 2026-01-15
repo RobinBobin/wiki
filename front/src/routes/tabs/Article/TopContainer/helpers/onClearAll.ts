@@ -1,11 +1,9 @@
-import type { Dispatch, SetStateAction } from 'react'
-
 import Alert from '@blazejkustra/react-native-alert'
+import { currentArticleModel } from '@mst'
 
-export const onClearAll = (
-  setBody: Dispatch<SetStateAction<string>>,
-  setTitle: Dispatch<SetStateAction<string>>
-): (() => void) => {
+export const onClearAll = (): (() => void) => {
+  const { body, title } = currentArticleModel
+
   return () => {
     Alert.alert(
       'Clear all content?',
@@ -16,8 +14,10 @@ export const onClearAll = (
         },
         {
           onPress(): void {
-            setBody('')
-            setTitle('')
+            ;[body, title].forEach(field => {
+              field.setIsInvalid(false)
+              field.setText('')
+            })
           },
           text: 'Yes'
         }

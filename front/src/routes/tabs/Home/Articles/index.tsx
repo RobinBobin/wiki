@@ -1,9 +1,10 @@
 import type { Article } from '@gen/wiki/article/v1/article_pb'
 import type { ListRenderItem } from 'react-native'
 import type { ListItemProps } from 'react-native-paper'
+import type { TArticleParams } from '../../Article'
 
-import { handleError } from '@helpers/handleError'
 import { articles } from '@mst'
+import { useRouter } from 'expo-router'
 import { observer } from 'mobx-react-lite'
 import { FlatList } from 'react-native'
 import { List, Text } from 'react-native-paper'
@@ -14,6 +15,8 @@ interface IArticlesProps {
 
 export const Articles: React.FC<IArticlesProps> = observer(
   ({ isQueryEmpty }) => {
+    const router = useRouter()
+
     const { payload } = articles.searchArticles.response
 
     if (!payload || isQueryEmpty) {
@@ -21,10 +24,16 @@ export const Articles: React.FC<IArticlesProps> = observer(
     }
 
     const renderItem: ListRenderItem<Readonly<Article>> = ({
-      item: { id, title }
+      item: { body, id, title }
     }) => {
       const onPress = (): void => {
-        handleError(new Error(`${title} (${id})`))
+        const params: TArticleParams = {
+          body,
+          id: id.toString(),
+          title
+        }
+
+        router.navigate({ params, pathname: '/article' })
       }
 
       const right: ListItemProps['right'] = props => (
